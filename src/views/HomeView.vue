@@ -1,8 +1,7 @@
-<script lang="ts">
-
+<script setup lang="ts">
+import AdjacentColor from '../components/adjacent-color/AdjacentColor.vue';
 </script>
 
-
 <template>
-  <h1>Hey</h1>
+  <AdjacentColor />
 </template>
