@@ -1,9 +1,11 @@
 /* color palette from <https://github.com/vuejs/theme> */
 
-$color-1: rgb(255, 148, 148);
-$color-2: rgb(232, 232, 232);
-$color-3: rgb(24, 24, 24);
+$color-1: #1E1E1E;
+$color-2: #D9D9D9;
+$color-3: #1E1E1E;
+$color-4:  rgba(30, 30, 30, 0.09);
 
 $var-color-1: var(--sp-color-1);
 $var-color-2: var(--sp-color-2);
 $var-color-3: var(--sp-color-3);
+$var-color-4: var(--sp-color-4);

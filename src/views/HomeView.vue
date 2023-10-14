@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AdjacentColor from '../components/adjacent-color/AdjacentColor.vue';
+import AdjacentColor from '../components/AdjacentColor.vue';
 </script>
 
 <template>
