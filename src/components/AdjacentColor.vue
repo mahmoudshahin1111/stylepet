@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import type { IColor } from '../utils/utils'
 import { hexToRgb } from '../utils/common'
-import ColorsInputAdvance from './ColorsInputAdvance.vue'
 
 interface IResult {
   value: string
@@ -68,120 +67,143 @@ const calculateAdjacentColor = () => {
 </script>
 
 <template>
-  <div class="main-colors">
-    <span class="main-colors-text">Main Colors</span>
-    <form class="main-colors-form" @submit.prevent="addColor">
-      <div class="color-picker-container">
-        <v-color-picker v-model="inputColor"></v-color-picker>
-      </div>
-      <small>Add all the color that do you want to match</small>
-      <v-btn type="submit" :disabled="!inputColor">Add</v-btn>
-    </form>
-    <v-virtual-scroll class="main-colors-scroller" :max-height="150" :items="mainColors">
-      <template v-slot:default="{ item }">
-        <div class="color-item-container">
-          {{ item.value }}
-          <v-btn @click="removeColor(item.value)">Delete</v-btn>
+  <div class="container">
+    <div class="main-colors">
+      <span class="main-colors-text">Main Colors</span>
+      <form class="main-colors-form" @submit.prevent="addColor">
+        <div class="color-picker-container">
+          <v-color-picker v-model="inputColor"></v-color-picker>
         </div>
-      </template>
-    </v-virtual-scroll>
-  </div>
+        <small>Add all the color that do you want to match</small>
+        <v-btn type="submit" :disabled="!inputColor" :ripple="false">Add</v-btn>
+      </form>
+      <v-virtual-scroll class="main-colors-scroller" :max-height="150" :items="mainColors">
+        <template v-slot:default="{ item }">
+          <div class="color-item-container">
+            <div>
+              {{ item.value }}
+              <div class="color-preview" :style="{ backgroundColor: item.value }"></div>
+            </div>
+            <v-btn @click="removeColor(item.value)" :ripple="false">Delete</v-btn>
+          </div>
+        </template>
+      </v-virtual-scroll>
+    </div>
 
-  <v-divider :thickness="5" class="divider"></v-divider>
+    <v-divider :thickness="5" class="divider"></v-divider>
 
-  <div>
-    <div class="target-color-text">Target Color</div>
-    <div class="color-picker-container">
-      <v-color-picker v-model="targetColor"></v-color-picker>
+    <div>
+      <div class="target-color-text">Target Color</div>
+      <div class="color-picker-container">
+        <v-color-picker v-model="targetColor"></v-color-picker>
+      </div>
+    </div>
+
+    <div>
+      <div class="actions-buttons">
+        <v-btn type="button" @click="reset" :ripple="false">Reset</v-btn>
+        <v-btn type="button" @click="calculateAdjacentColor" :ripple="false">Calculate</v-btn>
+      </div>
+
+      <span v-if="results?.length">
+        <v-divider :thickness="5" class="divider"></v-divider>
+        <div class="results-text">Results</div>
+        <v-table>
+          <thead>
+            <tr>
+              <th>Color</th>
+              <th>Adjacent Percentage %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="r in results" :key="r.value">
+              <td>
+                {{ r.value }}
+                <div class="color-preview" :style="{ backgroundColor: r.value }"></div>
+              </td>
+              <td>{{ r.adjacentByInPercent }} %</td>
+            </tr>
+          </tbody>
+        </v-table>
+      </span>
     </div>
   </div>
-
-  <div class="actions-buttons">
-    <v-btn type="button" @click="reset">Reset</v-btn>
-    <v-btn type="button" @click="calculateAdjacentColor">Calculate</v-btn>
-  </div>
-
-  <span v-if="results?.length">
-    <v-divider :thickness="5" class="divider"></v-divider>
-    <div class="results-text">Results</div>
-    <v-table>
-      <thead>
-        <tr>
-          <th>Color</th>
-          <th>Adjacent Percentage %</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="r in results" :key="r.value">
-          <td>
-            {{ r.value }}
-            <div class="color-preview" :style="{ backgroundColor: r.value }"></div>
-          </td>
-          <td>{{ r.adjacentByInPercent }} %</td>
-        </tr>
-      </tbody>
-    </v-table>
-  </span>
 </template>
 
 <style scoped lang="scss">
-.main-colors-text {
-  display: block;
-  margin-bottom: 28px;
-}
-.main-colors-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-}
+.container {
+  .main-colors-text {
+    display: block;
+    margin-bottom: 28px;
+  }
 
-.main-colors-scroller {
-  margin-top: 15px;
-  background-color: #fff;
-  .color-item-container {
+  .main-colors-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .main-colors-scroller {
+    margin-top: 15px;
+    background-color: #fff;
+
+    .color-item-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 20px;
+    }
+  }
+
+  .divider {
+    margin: 50px 0px;
+  }
+
+  .target-color-text {
+    margin-bottom: 28px;
+  }
+
+  .results-text {
+    margin-bottom: 28px;
+  }
+
+  .actions-buttons {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding: 20px;
+    justify-content: flex-end;
+    margin-top: 28px;
+    gap: 20px;
+  }
+
+  .color-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .v-color-picker {
+      margin: auto;
+    }
+  }
+
+  .color-preview {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
   }
 }
 
-.divider {
-  margin: 50px 0px;
-}
-
-.target-color-text {
-  margin-bottom: 28px;
-}
-
-.results-text {
-  margin-bottom: 28px;
-}
-
-.actions-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 28px;
-  gap: 20px;
-}
-
-.color-picker-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  .v-color-picker {
-    margin: auto;
+@media screen and (min-width: 900px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
-}
 
-.color-preview {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
+  .divider {
+    display: none;
+  }
 }
 </style>

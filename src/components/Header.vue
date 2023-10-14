@@ -4,8 +4,8 @@ import Icon from '../components/icons/logo.vue'
 <template>
   <div class="st-header">
     <div class="st-links">
-      <RouterLink class="st-router-link" to="/">Home</RouterLink>
-      <RouterLink class="st-router-link" to="/about">About</RouterLink>
+      <v-btn @click="() => $router.push('/')" to="/">Home</v-btn>
+      <v-btn @click="() => $router.push('/about')" to="/about">About</v-btn>
     </div>
     <div class="st-icon">
       <icon />
