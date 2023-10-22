@@ -45,8 +45,7 @@ const removeColor = (value: string) => {
 const calculateAdjacentColor = () => {
   const colorsInRGB: IResult[] = []
   const targetColorRgb = hexToRgb(targetColor.value!)
-  console.log(targetColor.value, targetColorRgb)
-
+  
   if (!targetColorRgb) return
   mainColors.value.forEach((color) => {
     const rgb = hexToRgb(color.value)
