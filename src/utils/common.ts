@@ -11,7 +11,6 @@ export function hexToRgb(hex: string):{r:number,g:number,b:number,a?} {
   }else{
     returns.a = 255
   }
-  console.log(returns)
   return returns || null;
 }
 
