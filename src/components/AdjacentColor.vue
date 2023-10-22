@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import type { IColor } from '../utils/utils'
 import { hexToRgb } from '../utils/common'
+import { watch } from 'vue'
 
 interface IResult {
   value: string
@@ -16,6 +17,10 @@ const mainColors = ref<IColor[]>([])
 const targetColor = ref<string>()
 const inputColor = ref<string>()
 const results = ref<IResult[]>()
+
+watch(targetColor, () => {
+  calculateAdjacentColor()
+})
 
 const addColor = () => {
   if (!inputColor.value) return
@@ -40,26 +45,26 @@ const removeColor = (value: string) => {
 const calculateAdjacentColor = () => {
   const colorsInRGB: IResult[] = []
   const targetColorRgb = hexToRgb(targetColor.value!)
+  console.log(targetColor.value, targetColorRgb)
+
   if (!targetColorRgb) return
-  let totalRgba = 0
   mainColors.value.forEach((color) => {
     const rgb = hexToRgb(color.value)
     if (!rgb) return
     const gDiff = Math.abs(targetColorRgb.g - rgb.g)
     const rDiff = Math.abs(targetColorRgb.r - rgb.r)
     const bDiff = Math.abs(targetColorRgb.b - rgb.b)
-    colorsInRGB.push({
+
+    const totalRgbDiff = gDiff + rDiff + bDiff
+    const colorInRGB: IResult = {
       value: color.value,
       blue: rgb.b,
       green: rgb.g,
       red: rgb.r,
-      totalRgbDiff: gDiff + rDiff + bDiff
-    })
-    totalRgba += gDiff + rDiff + bDiff
-  })
-
-  colorsInRGB.forEach((color) => {
-    color.adjacentByInPercent = (1 - color.totalRgbDiff / totalRgba) * 100
+      totalRgbDiff,
+      adjacentByInPercent: parseInt(((1 - totalRgbDiff / (255 * 3)) * 100).toFixed(3))
+    }
+    colorsInRGB.push(colorInRGB)
   })
 
   results.value = colorsInRGB
@@ -72,7 +77,7 @@ const calculateAdjacentColor = () => {
       <span class="main-colors-text">Main Colors</span>
       <form class="main-colors-form" @submit.prevent="addColor">
         <div class="color-picker-container">
-          <v-color-picker v-model="inputColor"></v-color-picker>
+          <v-color-picker v-model="inputColor" mode="rgb"></v-color-picker>
         </div>
         <small>Add all the color that do you want to match</small>
         <v-btn type="submit" :disabled="!inputColor" :ripple="false">Add</v-btn>
@@ -95,14 +100,14 @@ const calculateAdjacentColor = () => {
     <div>
       <div class="target-color-text">Target Color</div>
       <div class="color-picker-container">
-        <v-color-picker v-model="targetColor"></v-color-picker>
+        <v-color-picker v-model="targetColor" mode="rgb"></v-color-picker>
       </div>
     </div>
 
     <div>
       <div class="actions-buttons">
         <v-btn type="button" @click="reset" :ripple="false">Reset</v-btn>
-        <v-btn type="button" @click="calculateAdjacentColor" :ripple="false">Calculate</v-btn>
+        <!-- <v-btn type="button" @click="calculateAdjacentColor" :ripple="false">Calculate</v-btn> -->
       </div>
 
       <span v-if="results?.length">
