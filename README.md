@@ -1,13 +1,13 @@
 [![Deploy](https://github.com/mahmoudshahin1111/stylepet/actions/workflows/azure-static-web-apps-ambitious-bush-03863fe10.yml/badge.svg)](https://github.com/mahmoudshahin1111/stylepet/actions/workflows/azure-static-web-apps-ambitious-bush-03863fe10.yml)
 
 <p align="center">
-  <img src="./public/stylepet-logo.svg" alt="Stylepet logo" width="220" />
+  <img src="./public/stylepet-logo.svg" alt="Devpet logo" width="220" />
 </p>
 
-<h1 align="center">Stylepet</h1>
+<h1 align="center">Devpet</h1>
 
 <p align="center">
-  Stylepet is an open-source web tool for transforming CSS color variables for styling purposes.
+  Devpet is an open-source web tool for transforming CSS color variables for styling purposes.
 </p>
 
 <p align="center">
@@ -18,7 +18,7 @@
 
 ## What it does
 
-Stylepet helps you work with CSS color variables and styling-related color calculations in a simple Vue-based interface.
+Devpet helps you work with CSS color variables and styling-related color calculations in a simple Vue-based interface.
 
 ## Features
 
