@@ -27,6 +27,12 @@ Stylepet helps you work with CSS color variables and styling-related color calcu
 - Lightweight Vue + Vite app
 - Easy to run locally
 
+## Screenshot
+
+<p align="center">
+  <img src="./public/stylepet-screenshot.png" alt="Stylepet running in a browser" width="100%" />
+</p>
+
 ## Project status
 
 This repository is archived.
