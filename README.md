@@ -1,9 +1,5 @@
 [![Deploy](https://github.com/mahmoudshahin1111/stylepet/actions/workflows/azure-static-web-apps-ambitious-bush-03863fe10.yml/badge.svg)](https://github.com/mahmoudshahin1111/stylepet/actions/workflows/azure-static-web-apps-ambitious-bush-03863fe10.yml)
 
-<p align="center">
-  <img src="./public/devpet-logo.png" alt="Devpet logo" width="220" />
-</p>
-
 <h1 align="center">Devpet</h1>
 
 <p align="center">
